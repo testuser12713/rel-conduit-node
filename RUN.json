@@ -1,0 +1,34 @@
+{
+  "runcontract": 1,
+  "services": [
+    {
+      "name": "db",
+      "kind": "database",
+      "engine": "postgres"
+    },
+    {
+      "name": "api",
+      "dir": ".",
+      "stack": "web-vite",
+      "kind": "server",
+      "install": [["npm", "ci"]],
+      "build": [["npx", "nx", "build", "api"]],
+      "start": ["npm", "run", "start:prod"],
+      "port": 3000,
+      "port_env": "PORT",
+      "health": {
+        "path": "/",
+        "expect_status": [200]
+      },
+      "env": {
+        "PORT": { "dev": "3000" },
+        "DATABASE_URL": { "dev": "${service:db.url}" },
+        "JWT_SECRET": { "generate": "hex", "bytes": 32 },
+        "CORS_ORIGIN": { "dev": "${service:web.origin}" }
+      },
+      "depends_on": ["db"],
+      "seed": [["npx", "prisma", "db", "seed"]],
+      "test": [["npx", "nx", "test", "api"]]
+    }
+  ]
+}
