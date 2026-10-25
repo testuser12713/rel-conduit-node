@@ -71,15 +71,20 @@ export PORT=3000
 
 ## Entwicklung starten
 
-Zuerst die Migrationen auf die leere Datenbank anwenden:
+Ein einziger Befehl startet die vollständige Entwicklungsumgebung — die PostgreSQL-Datenbank `db` und die API `api` im Entwicklungsmodus — inklusive der Migrationen:
 
 ```shell
-npx prisma migrate deploy
+npm run dev
 ```
 
-Dann die API im Entwicklungsmodus starten:
+Der Launcher wartet, bis die Datenbank bereit ist, erzeugt den Prisma-Client, wendet die Migrationen an und startet danach die API. Ist `DATABASE_URL` nicht gesetzt, verwendet er die lokale Entwicklungsverbindung `postgresql://app:app@localhost:5432/app` aus der `compose.yaml`.
+
+Dieselben Schritte lassen sich auch einzeln ausführen:
 
 ```shell
+docker compose up -d --wait db
+npx prisma generate
+npx prisma migrate deploy
 npx nx serve api
 ```
 
