@@ -1,8 +1,8 @@
 import express from 'express';
-import cors from 'cors';
 import * as bodyParser from 'body-parser';
 import routes from './app/routes/routes';
 import HttpException from './app/models/http-exception.model';
+import { createCorsMiddleware } from './cors';
 
 const app = express();
 
@@ -10,7 +10,12 @@ const app = express();
  * App Configuration
  */
 
-app.use(cors());
+const corsMiddleware = createCorsMiddleware();
+
+if (corsMiddleware) {
+  app.use(corsMiddleware);
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(routes);
