@@ -6,6 +6,7 @@
     "dev": "node scripts/dev.js",
     "start": "nx serve",
     "start:prod": "npx prisma migrate deploy && node dist/api/main.js",
+    "seed": "npx prisma migrate deploy && npx prisma db seed",
     "build": "nx build",
     "test": "nx test"
   },

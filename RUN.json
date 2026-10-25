@@ -19,7 +19,7 @@
       "port": 3000,
       "port_env": "PORT",
       "health": {
-        "path": "/",
+        "path": "/api/articles",
         "expect_status": [200]
       },
       "env": {
@@ -29,7 +29,7 @@
         "CORS_ORIGIN": { "dev": "${service:web.origin}" }
       },
       "depends_on": ["db"],
-      "seed": [["npx", "prisma", "db", "seed"]],
+      "seed": [["npm", "run", "seed"]],
       "test": [["npx", "nx", "test", "api"]]
     }
   ]
