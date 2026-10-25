@@ -12,7 +12,9 @@
       "stack": "web-vite",
       "kind": "server",
       "install": [["npm", "ci"]],
-      "build": [["npx", "nx", "build", "api"]],
+      "build": [
+        ["npx", "nx", "build", "api"]
+      ],
       "start": ["npm", "run", "start:prod"],
       "port": 3000,
       "port_env": "PORT",
